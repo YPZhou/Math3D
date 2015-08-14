@@ -5,10 +5,8 @@
 
 Math3D::Quaternion::Quaternion() : x(m_q[0]), y(m_q[1]), z(m_q[2]), w(m_q[3])
 {
-	m_q[0] = 0;
-	m_q[1] = 0;
-	m_q[2] = 0;
-	m_q[3] = 0;
+	for (size_t i = 0; i < 4; i++)
+		m_q[i] = 0;
 }
 
 Math3D::Quaternion::Quaternion(float x, float y, float z, float w) : x(m_q[0]), y(m_q[1]), z(m_q[2]), w(m_q[3])
@@ -29,15 +27,6 @@ Math3D::Quaternion::Quaternion(const Math3D::Vector& axis, float angle) : x(m_q[
 	m_q[2] = axis.z * sinRad;
 	m_q[3] = cosRad;
 	normalize();
-}
-
-Math3D::Quaternion & Math3D::Quaternion::operator=(const Math3D::Quaternion & quaternion)
-{
-	m_q[0] = quaternion.m_q[0];
-	m_q[1] = quaternion.m_q[1];
-	m_q[2] = quaternion.m_q[2];
-	m_q[3] = quaternion.m_q[3];
-	return *this;
 }
 
 float & Math3D::Quaternion::operator[](size_t i)
@@ -74,7 +63,7 @@ Math3D::Quaternion & Math3D::Quaternion::normalize()
 
 namespace Math3D
 {
-	Math3D::Quaternion operator*(const Math3D::Quaternion lquat, const Math3D::Quaternion & rquat)
+	Math3D::Quaternion operator*(const Math3D::Quaternion& lquat, const Math3D::Quaternion & rquat)
 	{
 		return Math3D::Quaternion(lquat.m_q[3] * rquat.m_q[0] + lquat.m_q[0] * rquat.m_q[3] + lquat.m_q[1] * rquat.m_q[2] - lquat.m_q[2] * rquat.m_q[1],
 								  lquat.m_q[3] * rquat.m_q[1] + lquat.m_q[1] * rquat.m_q[3] + lquat.m_q[2] * rquat.m_q[0] - lquat.m_q[0] * rquat.m_q[2],

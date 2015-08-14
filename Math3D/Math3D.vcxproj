@@ -125,10 +125,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Classes.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Quaternion.cpp" />
     <ClCompile Include="Vector.cpp" />
   </ItemGroup>

@@ -3,9 +3,8 @@
 
 Math3D::Vector::Vector() : x(m_v[0]), y(m_v[1]), z(m_v[2])
 {
-	m_v[0] = 0;
-	m_v[1] = 0;
-	m_v[2] = 0;
+	for (size_t i = 0; i < 3; i++)
+		m_v[i] = 0;
 }
 
 Math3D::Vector::Vector(float x, float y, float z) : x(m_v[0]), y(m_v[1]), z(m_v[2])
@@ -13,14 +12,6 @@ Math3D::Vector::Vector(float x, float y, float z) : x(m_v[0]), y(m_v[1]), z(m_v[
 	m_v[0] = x;
 	m_v[1] = y;
 	m_v[2] = z;
-}
-
-Math3D::Vector& Math3D::Vector::operator=(const Math3D::Vector & vector)
-{
-	m_v[0] = vector.m_v[0];
-	m_v[1] = vector.m_v[1];
-	m_v[2] = vector.m_v[2];
-	return *this;
 }
 
 float& Math3D::Vector::operator[](size_t i)
@@ -87,7 +78,7 @@ namespace Math3D
 		return Math3D::Vector(lvec.m_v[0] - rvec.m_v[0], lvec.m_v[1] - rvec.m_v[1], lvec.m_v[2] - rvec.m_v[2]);
 	}
 
-	float operator*(const Math3D::Vector lvec, const Math3D::Vector& rvec)
+	float operator*(const Math3D::Vector& lvec, const Math3D::Vector& rvec)
 	{
 		return lvec.m_v[0] * rvec.m_v[0] + lvec.m_v[1] * rvec.m_v[1] + lvec.m_v[2] * rvec.m_v[2];
 	}

@@ -9,10 +9,9 @@ public:
 	Quaternion(float x, float y, float z, float w);
 	Quaternion(const Math3D::Vector& axis, float angle);
 
-	Math3D::Quaternion& operator=(const Math3D::Quaternion& quaternion);
 	float& operator[](size_t i);
 
-	__declspec(dllexport) friend Math3D::Quaternion operator*(const Math3D::Quaternion lquat, const Math3D::Quaternion& rquat);
+	__declspec(dllexport) friend Math3D::Quaternion operator*(const Math3D::Quaternion& lquat, const Math3D::Quaternion& rquat);
 
 	float lengthSquare() const;
 	float length() const;

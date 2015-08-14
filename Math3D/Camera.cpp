@@ -134,9 +134,9 @@ Math3D::Matrix Math3D::Utils::Camera::lookat(const Math3D::Vector& vector, const
 
 Math3D::Matrix Math3D::Utils::Camera::translate(const Math3D::Vector & trans) const
 {
-	return Math3D::Matrix(1, 0, 0, trans.x,
-						  0, 1, 0, trans.y,
-						  0, 0, 1, trans.z,
+	return Math3D::Matrix(1, 0, 0, trans[0],
+						  0, 1, 0, trans[1],
+						  0, 0, 1, trans[2],
 						  0, 0, 0, 1);
 }
 

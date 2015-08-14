@@ -27,6 +27,12 @@ float& Math3D::Vector::operator[](size_t i)
 	return m_v[i];
 }
 
+const float & Math3D::Vector::operator[](size_t i) const
+{
+	if (i >= 3) return m_v[0];
+	return m_v[i];
+}
+
 Math3D::Vector & Math3D::Vector::operator=(const Math3D::Vector & vector)
 {
 	m_v[0] = vector.x;

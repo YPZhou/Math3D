@@ -11,6 +11,7 @@ public:
 	Quaternion(const Math3D::Quaternion& quaternion);
 
 	float& operator[](size_t i);
+	const float& operator[](size_t i) const;
 	Math3D::Quaternion& operator=(const Math3D::Quaternion& quaternion);
 
 	__declspec(dllexport) friend Math3D::Quaternion operator*(const Math3D::Quaternion& lquat, const Math3D::Quaternion& rquat);

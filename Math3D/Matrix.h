@@ -13,9 +13,10 @@ public:
 	Matrix(const Math3D::Quaternion& quaternion);
 
 	float& operator[](size_t i);
+	const float& operator[](size_t i) const;
 
 	__declspec(dllexport) friend Math3D::Matrix operator*(const Math3D::Matrix& lmat, const Math3D::Matrix& rmat);
-	__declspec(dllexport) friend Math3D::Matrix operator*(const Math3D::Matrix& lmat, const Math3D::Vector& rvec);
+	__declspec(dllexport) friend Math3D::Vector operator*(const Math3D::Matrix& lmat, const Math3D::Vector& rvec);
 
 	Math3D::Matrix transposed() const;
 	Math3D::Matrix& transpose();

@@ -22,9 +22,9 @@ Math3D::Quaternion::Quaternion(const Math3D::Vector& axis, float angle) : x(m_q[
 	float rad = angle / 360 * (float)M_PI;
 	float sinRad = sinf(rad);
 	float cosRad = cosf(rad);
-	m_q[0] = axis.x * sinRad;
-	m_q[1] = axis.y * sinRad;
-	m_q[2] = axis.z * sinRad;
+	m_q[0] = axis[0] * sinRad;
+	m_q[1] = axis[1] * sinRad;
+	m_q[2] = axis[2] * sinRad;
 	m_q[3] = cosRad;
 	normalize();
 }
@@ -38,6 +38,12 @@ Math3D::Quaternion::Quaternion(const Math3D::Quaternion & quaternion) : x(m_q[0]
 }
 
 float & Math3D::Quaternion::operator[](size_t i)
+{
+	if (i >= 4) return m_q[0];
+	return m_q[i];
+}
+
+const float & Math3D::Quaternion::operator[](size_t i) const
 {
 	if (i >= 4) return m_q[0];
 	return m_q[i];

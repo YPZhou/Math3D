@@ -41,6 +41,12 @@ float & Math3D::Matrix::operator[](size_t i)
 	return m_m[i];
 }
 
+const float & Math3D::Matrix::operator[](size_t i) const
+{
+	if (i >= 16) return m_m[0];
+	return m_m[i];
+}
+
 Math3D::Matrix Math3D::Matrix::transposed() const
 {
 	return Math3D::Matrix(m_m[0], m_m[4], m_m[8], m_m[12],
@@ -66,11 +72,18 @@ namespace Math3D
 {
 	Math3D::Matrix operator*(const Math3D::Matrix & lmat, const Math3D::Matrix & rmat)
 	{
-		return Math3D::Quaternion();
+		Math3D::Matrix res;
+		for (int i = 0; i < 4; i++)
+			for (int j = 0; j < 4; j++)
+				res[i * 4 + j] = lmat[i * 4] * rmat[j] + lmat[i * 4 + 1] * rmat[j + 4] + lmat[i * 4 + 2] * rmat[j + 8] + lmat[i * 4 + 3] * rmat[j + 12];
+		return res;
 	}
 
-	Math3D::Matrix operator*(const Math3D::Matrix & lmat, const Math3D::Vector & rvec)
+	Math3D::Vector operator*(const Math3D::Matrix & lmat, const Math3D::Vector & rvec)
 	{
-		return Math3D::Quaternion();
+		Math3D::Vector res;
+		for (int i = 0; i < 4; i++)
+			res[i] = lmat[i * 4] * rvec[0] + lmat[i * 4 + 1] * rvec[1] + lmat[i * 4 + 2] * rvec[2] + lmat[i * 4 + 3] * rvec[3];
+		return res;
 	}
 }

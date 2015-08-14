@@ -10,6 +10,7 @@ public:
 	Vector(const Math3D::Vector& vector);
 
 	float& operator[](size_t i);
+	const float& operator[](size_t i) const;
 	Math3D::Vector& operator=(const Math3D::Vector& vector);
 
 	__declspec(dllexport) friend Math3D::Vector operator+(const Math3D::Vector lvec, const Math3D::Vector& rvec);

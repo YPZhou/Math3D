@@ -14,10 +14,25 @@ Math3D::Vector::Vector(float x, float y, float z) : x(m_v[0]), y(m_v[1]), z(m_v[
 	m_v[2] = z;
 }
 
+Math3D::Vector::Vector(const Math3D::Vector & vector) : x(m_v[0]), y(m_v[1]), z(m_v[2])
+{
+	m_v[0] = vector.x;
+	m_v[1] = vector.y;
+	m_v[2] = vector.z;
+}
+
 float& Math3D::Vector::operator[](size_t i)
 {
 	if (i >= 3) return m_v[0];
 	return m_v[i];
+}
+
+Math3D::Vector & Math3D::Vector::operator=(const Math3D::Vector & vector)
+{
+	m_v[0] = vector.x;
+	m_v[1] = vector.y;
+	m_v[2] = vector.z;
+	return *this;
 }
 
 float Math3D::Vector::lengthSquare() const
@@ -64,6 +79,31 @@ Math3D::Vector & Math3D::Vector::normalize()
 {
 	scale(1 / length());
 	return *this;
+}
+
+Math3D::Vector Math3D::Vector::zero()
+{
+	return Math3D::Vector(0, 0, 0);
+}
+
+Math3D::Vector Math3D::Vector::one()
+{
+	return Math3D::Vector(1, 1, 1);
+}
+
+Math3D::Vector Math3D::Vector::up()
+{
+	return Math3D::Vector(0, 1, 0);
+}
+
+Math3D::Vector Math3D::Vector::forward()
+{
+	return Math3D::Vector(0, 0, 1);
+}
+
+Math3D::Vector Math3D::Vector::right()
+{
+	return Math3D::Vector(1, 0, 0);
 }
 
 namespace Math3D

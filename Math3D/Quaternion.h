@@ -8,8 +8,10 @@ public:
 	Quaternion();
 	Quaternion(float x, float y, float z, float w);
 	Quaternion(const Math3D::Vector& axis, float angle);
+	Quaternion(const Math3D::Quaternion& quaternion);
 
 	float& operator[](size_t i);
+	Math3D::Quaternion& operator=(const Math3D::Quaternion& quaternion);
 
 	__declspec(dllexport) friend Math3D::Quaternion operator*(const Math3D::Quaternion& lquat, const Math3D::Quaternion& rquat);
 

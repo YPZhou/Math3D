@@ -29,10 +29,27 @@ Math3D::Quaternion::Quaternion(const Math3D::Vector& axis, float angle) : x(m_q[
 	normalize();
 }
 
+Math3D::Quaternion::Quaternion(const Math3D::Quaternion & quaternion) : x(m_q[0]), y(m_q[1]), z(m_q[2]), w(m_q[3])
+{
+	m_q[0] = quaternion.x;
+	m_q[1] = quaternion.y;
+	m_q[2] = quaternion.z;
+	m_q[3] = quaternion.w;
+}
+
 float & Math3D::Quaternion::operator[](size_t i)
 {
 	if (i >= 4) return m_q[0];
 	return m_q[i];
+}
+
+Math3D::Quaternion & Math3D::Quaternion::operator=(const Math3D::Quaternion & quaternion)
+{
+	m_q[0] = quaternion.x;
+	m_q[1] = quaternion.y;
+	m_q[2] = quaternion.z;
+	m_q[3] = quaternion.w;
+	return *this;
 }
 
 float Math3D::Quaternion::lengthSquare() const

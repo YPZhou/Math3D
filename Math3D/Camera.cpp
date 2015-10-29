@@ -146,8 +146,8 @@ Math3D::Matrix Math3D::Utils::Camera::perspective(int fovH, int fovV, float near
 	float t = tanf(fovV / 360.0f * (float)M_PI);
 	return Math3D::Matrix(1 / r, 0, 0, 0,
 						  0, 1 / t, 0, 0,
-						  0, 0, -2 / (far - near), -(far + near) / (far - near),
-						  0, 0, 0, 1);
+						  0, 0, -(far + near) / (far - near), -(2 * far * near) / (far - near),
+						  0, 0, -1, 0);
 }
 
 

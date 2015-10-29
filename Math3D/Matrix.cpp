@@ -9,12 +9,12 @@ Math3D::Matrix::Matrix()
 		m_m[i] = 0;
 }
 
-Math3D::Matrix::Matrix(float m0, float m1, float m2, float m3, float m4, float m5, float m6, float m7, float m8, float m9, float m10, float m11, float m12, float m13, float m14, float m16)
+Math3D::Matrix::Matrix(float m0, float m1, float m2, float m3, float m4, float m5, float m6, float m7, float m8, float m9, float m10, float m11, float m12, float m13, float m14, float m15)
 {
 	m_m[0] = m0; m_m[1] = m1; m_m[2] = m2; m_m[3] = m3;
-	m_m[4] = m0; m_m[5] = m1; m_m[6] = m2; m_m[7] = m3;
-	m_m[8] = m0; m_m[9] = m1; m_m[10] = m2; m_m[11] = m3;
-	m_m[12] = m0; m_m[13] = m1; m_m[14] = m2; m_m[15] = m3;
+	m_m[4] = m4; m_m[5] = m5; m_m[6] = m6; m_m[7] = m7;
+	m_m[8] = m8; m_m[9] = m9; m_m[10] = m10; m_m[11] = m11;
+	m_m[12] = m12; m_m[13] = m13; m_m[14] = m14; m_m[15] = m15;
 }
 
 Math3D::Matrix::Matrix(const Math3D::Quaternion& quaternion)

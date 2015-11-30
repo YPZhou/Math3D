@@ -2,7 +2,9 @@
 
 #include "Classes.h"
 #include "Vector.h"
+#include "Quaternion.h"
 #include "Matrix.h"
+
 
 class Math3D::Utils::Camera
 {
@@ -28,11 +30,16 @@ public:
 	void setFar(float far);
 
 	Math3D::Matrix getMVP() const;
+	Math3D::Matrix getMVP(int screenH, int screenV) const;
+
+	float projW(const Math3D::Vector& pos, float width) const;
+	float projH(const Math3D::Vector& pos, float height) const;
 
 private:
 	Math3D::Matrix lookat(const Math3D::Vector& vector, const Math3D::Vector& up) const;
 	Math3D::Matrix translate(const Math3D::Vector& trans) const;
-	Math3D::Matrix perspective(int fovH, int fovV, float near, float far) const;
+	Math3D::Matrix perspective(float near, float far) const;
+	Math3D::Matrix perspective(int screenH, int screenV, float near, float far) const;
 
 	float m_rotX;
 	float m_rotY;

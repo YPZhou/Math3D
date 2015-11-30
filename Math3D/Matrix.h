@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Classes.h"
+#include "Quaternion.h"
+#include "Vector.h"
+
 
 class Math3D::Matrix
 {

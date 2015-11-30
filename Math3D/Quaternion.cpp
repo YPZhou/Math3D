@@ -1,13 +1,14 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "Quaternion.h"
-#include "Vector.h"
+
 
 Math3D::Quaternion::Quaternion() : x(m_q[0]), y(m_q[1]), z(m_q[2]), w(m_q[3])
 {
 	for (size_t i = 0; i < 4; i++)
 		m_q[i] = 0;
 }
+
 
 Math3D::Quaternion::Quaternion(float x, float y, float z, float w) : x(m_q[0]), y(m_q[1]), z(m_q[2]), w(m_q[3])
 {
@@ -16,6 +17,7 @@ Math3D::Quaternion::Quaternion(float x, float y, float z, float w) : x(m_q[0]), 
 	m_q[2] = z;
 	m_q[3] = w;
 }
+
 
 Math3D::Quaternion::Quaternion(const Math3D::Vector& axis, float angle) : x(m_q[0]), y(m_q[1]), z(m_q[2]), w(m_q[3])
 {
@@ -29,6 +31,7 @@ Math3D::Quaternion::Quaternion(const Math3D::Vector& axis, float angle) : x(m_q[
 	normalize();
 }
 
+
 Math3D::Quaternion::Quaternion(const Math3D::Quaternion & quaternion) : x(m_q[0]), y(m_q[1]), z(m_q[2]), w(m_q[3])
 {
 	m_q[0] = quaternion.x;
@@ -37,17 +40,20 @@ Math3D::Quaternion::Quaternion(const Math3D::Quaternion & quaternion) : x(m_q[0]
 	m_q[3] = quaternion.w;
 }
 
+
 float & Math3D::Quaternion::operator[](size_t i)
 {
 	if (i >= 4) return m_q[0];
 	return m_q[i];
 }
 
+
 const float & Math3D::Quaternion::operator[](size_t i) const
 {
 	if (i >= 4) return m_q[0];
 	return m_q[i];
 }
+
 
 Math3D::Quaternion & Math3D::Quaternion::operator=(const Math3D::Quaternion & quaternion)
 {
@@ -58,21 +64,25 @@ Math3D::Quaternion & Math3D::Quaternion::operator=(const Math3D::Quaternion & qu
 	return *this;
 }
 
+
 float Math3D::Quaternion::lengthSquare() const
 {
 	return powf(m_q[0], 2) + powf(m_q[1], 2) + powf(m_q[2], 2) + powf(m_q[3], 2);
 }
+
 
 float Math3D::Quaternion::length() const
 {
 	return sqrtf(lengthSquare());
 }
 
+
 Math3D::Quaternion Math3D::Quaternion::normalized() const
 {
 	float len = length();
 	return Math3D::Quaternion(m_q[0] / len, m_q[1] / len, m_q[2] / len, m_q[3] / len);
 }
+
 
 Math3D::Quaternion & Math3D::Quaternion::normalize()
 {
@@ -83,6 +93,7 @@ Math3D::Quaternion & Math3D::Quaternion::normalize()
 	m_q[3] /= len;
 	return *this;
 }
+
 
 namespace Math3D
 {

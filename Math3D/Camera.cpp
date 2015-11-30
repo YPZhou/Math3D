@@ -1,7 +1,8 @@
 #define _USE_MATH_DEFINES
+
 #include <math.h>
 #include "Camera.h"
-#include "Quaternion.h"
+
 
 Math3D::Utils::Camera::Camera()
 {
@@ -23,6 +24,7 @@ Math3D::Utils::Camera::Camera()
 	m_far = 100;
 }
 
+
 Math3D::Utils::Camera::Camera(float rotX, float rotY, float rotZ, float transX, float transY, float transZ, const Math3D::Vector& camPos, const Math3D::Vector& targetPos, int fovH, int fovV, float near, float far)
 {
 	m_rotX = rotX;
@@ -43,65 +45,78 @@ Math3D::Utils::Camera::Camera(float rotX, float rotY, float rotZ, float transX, 
 	m_far = far;
 }
 
+
 void Math3D::Utils::Camera::setRotX(float rotX)
 {
 	m_rotX = rotX;
 }
+
 
 void Math3D::Utils::Camera::setRotY(float rotY)
 {
 	m_rotY = rotY;
 }
 
+
 void Math3D::Utils::Camera::setRotZ(float rotZ)
 {
 	m_rotZ = rotZ;
 }
+
 
 void Math3D::Utils::Camera::setTransX(float transX)
 {
 	m_transX = transX;
 }
 
+
 void Math3D::Utils::Camera::setTransY(float transY)
 {
 	m_transY = transY;
 }
+
 
 void Math3D::Utils::Camera::setTransZ(float transZ)
 {
 	m_transZ = transZ;
 }
 
+
 void Math3D::Utils::Camera::setCamPos(const Math3D::Vector& camPos)
 {
 	m_camPos = camPos;
 }
+
 
 void Math3D::Utils::Camera::setTargetPos(const Math3D::Vector& targetPos)
 {
 	m_targetPos = targetPos;
 }
 
+
 void Math3D::Utils::Camera::setFovH(int fovH)
 {
 	m_fovH = fovH;
 }
+
 
 void Math3D::Utils::Camera::setFovV(int fovV)
 {
 	m_fovV = fovV;
 }
 
+
 void Math3D::Utils::Camera::setNear(float near)
 {
 	m_near = near;
 }
 
+
 void Math3D::Utils::Camera::setFar(float far)
 {
 	m_far = far;
 }
+
 
 Math3D::Matrix Math3D::Utils::Camera::getMVP() const
 {
@@ -115,8 +130,43 @@ Math3D::Matrix Math3D::Utils::Camera::getMVP() const
 
 	Math3D::Matrix modelViewMat = viewMat * (transMat * rotMat);
 
-	return perspective(m_fovH, m_fovV, m_near, m_far) * modelViewMat;
+	return perspective(m_near, m_far) * modelViewMat;
 }
+
+
+Math3D::Matrix Math3D::Utils::Camera::getMVP(int screenH, int screenV) const
+{
+	Math3D::Quaternion qX(Math3D::Vector::right(), m_rotX);
+	Math3D::Quaternion qY(Math3D::Vector::up(), m_rotY);
+	Math3D::Quaternion qZ(Math3D::Vector::forward(), m_rotZ);
+	Math3D::Matrix rotMat((qX * qY * qZ).normalized());
+
+	Math3D::Matrix viewMat = lookat((m_camPos - m_targetPos).normalized(), Math3D::Vector::up());
+	Math3D::Matrix transMat = translate(Math3D::Vector(-m_camPos.x - m_transX, -m_camPos.y - m_transY, -m_camPos.z - m_transZ));
+
+	Math3D::Matrix modelViewMat = viewMat * (transMat * rotMat);
+
+	return perspective(screenH, screenV, m_near, m_far) * modelViewMat;
+}
+
+
+float Math3D::Utils::Camera::projW(const Math3D::Vector& pos, float width) const
+{
+	Math3D::Vector p = getMVP() * pos - m_camPos;
+	float l = p.z * tanf(m_fovH / 360.0f * (float)M_PI);
+	float r = (p.x + l) * 0.5f / l;
+	return r * width;
+}
+
+
+float Math3D::Utils::Camera::projH(const Math3D::Vector& pos, float height) const
+{
+	Math3D::Vector p = getMVP() * pos - m_camPos;
+	float l = p.z * tanf(m_fovV / 360.0f * (float)M_PI);
+	float r = (l - p.y) * 0.5f / l;
+	return r * height;
+}
+
 
 Math3D::Matrix Math3D::Utils::Camera::lookat(const Math3D::Vector& vector, const Math3D::Vector& up) const
 {
@@ -132,6 +182,7 @@ Math3D::Matrix Math3D::Utils::Camera::lookat(const Math3D::Vector& vector, const
 						  0, 0, 0, 1);
 }
 
+
 Math3D::Matrix Math3D::Utils::Camera::translate(const Math3D::Vector & trans) const
 {
 	return Math3D::Matrix(1, 0, 0, trans[0],
@@ -140,10 +191,23 @@ Math3D::Matrix Math3D::Utils::Camera::translate(const Math3D::Vector & trans) co
 						  0, 0, 0, 1);
 }
 
-Math3D::Matrix Math3D::Utils::Camera::perspective(int fovH, int fovV, float near, float far) const
+
+Math3D::Matrix Math3D::Utils::Camera::perspective(float near, float far) const
 {
-	float r = tanf(fovH / 360.0f * (float)M_PI);
-	float t = tanf(fovV / 360.0f * (float)M_PI);
+	float r = tanf(m_fovH / 360.0f * (float)M_PI);
+	float t = tanf(m_fovV / 360.0f * (float)M_PI);
+	return Math3D::Matrix(1 / r, 0, 0, 0,
+		0, 1 / t, 0, 0,
+		0, 0, -(far + near) / (far - near), -(2 * far * near) / (far - near),
+		0, 0, -1, 0);
+}
+
+
+Math3D::Matrix Math3D::Utils::Camera::perspective(int screenH, int screenV, float near, float far) const
+{
+	float aspectRatio = ((float)screenV) / screenH;
+	float r = tanf(m_fovH / 360.0f * (float)M_PI);
+	float t = tanf(m_fovH * aspectRatio / 360.0f * (float)M_PI);
 	return Math3D::Matrix(1 / r, 0, 0, 0,
 						  0, 1 / t, 0, 0,
 						  0, 0, -(far + near) / (far - near), -(2 * far * near) / (far - near),
